@@ -1,0 +1,59 @@
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #D4D4D2;
+}
+
+#calculator {
+    width: 360px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    border: #FF9500 solid 2px;
+}
+#display {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    background-color: #1c1c1c;
+    color: white;
+}
+.current-number-input, .saved-number {
+    font-family: 'Courier New', Courier, monospace;
+    margin: 5px;
+    padding: 5px;
+}
+.current-number-input {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+#keyboard {
+    flex: 1 1 0px;
+    display: grid;
+    justify-content: space-around;
+    align-content: space-around;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 0px;
+    background-color: #505050;
+}
+
+.btn {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
+    border-radius: 0px;
+    border: #505050 1px solid;
+    background-color: #afafaf;
+    font-size: 20px;
+    padding: 20px;
+}
+.btn-oper{
+    background-color: #FF9500;
+}
+
+.item0 {
+    grid-column: 1 / span 2;
+}
