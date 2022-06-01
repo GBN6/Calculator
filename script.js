@@ -1,5 +1,7 @@
 const number = document.querySelectorAll('.btn-number');
 const currentDisplay = document.querySelector('.current-number-input');
+let displayValue = {};
+console.log(displayValue);
 
 function add(number1, number2)
 {
@@ -41,8 +43,14 @@ function operate(number1, number2, operator)
 }
 function displayNumber(e)
 {
-    currentNumber = e.target.textContent;
-    currentDisplay.textContent === '0' ? currentDisplay.textContent = currentNumber : currentDisplay.textContent += currentNumber;
+    if (currentDisplay.textContent.length < 18)
+    {
+        currentNumber = e.target.textContent;
+        currentDisplay.textContent === '0' ? currentDisplay.textContent = currentNumber : currentDisplay.textContent += currentNumber;
+        displayValue = currentDisplay.textContent;
+        console.log(displayValue);
+        return displayValue;
+    }
 }
 
 number.forEach(element => element.addEventListener('click', displayNumber));
