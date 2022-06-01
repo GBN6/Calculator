@@ -25,7 +25,7 @@ function multiply(number1, number2)
 
 function divide(number1, number2)
 {
-    if (number2 === 0) { return "ERROR" }
+    if (number2 === "0") { return "ERROR" }
     else { return +number1 / +number2; }
 }
 
@@ -69,6 +69,7 @@ function calculate(e)
     switch(currentOperator) 
     {
         case '+':
+            saveOperator = e.target.textContent
             if (firstNumber === null)
             {
                 firstNumber = displayValue;
@@ -77,15 +78,87 @@ function calculate(e)
             }
             else if (firstNumber !== null)
             {
-                console.log(`firstNumber ${firstNumber}`)
                 secondNumber = displayValue;
-                console.log(`secondNumber ${secondNumber}`)
                 typedNumbers.textContent += `${secondNumber} + `;
                 currentDisplay.textContent = operate(firstNumber, secondNumber, currentOperator);
                 firstNumber = operate(firstNumber, secondNumber, currentOperator);
+                displayValue = firstNumber;
                 calculated = true;
-                console.log(`resultNumber ${firstNumber}`)
+            }
+            break;
 
+        case '-':
+            saveOperator = e.target.textContent
+            if (firstNumber === null)
+            {
+                firstNumber = displayValue;
+                currentDisplay.textContent = '0';
+                typedNumbers.textContent += `${firstNumber} - `;
+            }
+            else if (firstNumber !== null)
+            {
+                secondNumber = displayValue;
+                typedNumbers.textContent += `${secondNumber} - `;
+                currentDisplay.textContent = operate(firstNumber, secondNumber, currentOperator);
+                firstNumber = operate(firstNumber, secondNumber, currentOperator);
+                displayValue = firstNumber;
+                calculated = true;
+            }
+            break;
+
+        case '*':
+            saveOperator = e.target.textContent
+            if (firstNumber === null)
+            {
+                firstNumber = displayValue;
+                currentDisplay.textContent = '0';
+                typedNumbers.textContent += `${firstNumber} * `;
+            }
+            else if (firstNumber !== null)
+            {
+                secondNumber = displayValue;
+                typedNumbers.textContent += `${secondNumber} * `;
+                currentDisplay.textContent = operate(firstNumber, secondNumber, currentOperator);
+                firstNumber = operate(firstNumber, secondNumber, currentOperator);
+                displayValue = firstNumber;
+                calculated = true;
+            }
+            break;
+
+        case '/':
+            saveOperator = e.target.textContent
+            if (firstNumber === null)
+            {
+                firstNumber = displayValue;
+                currentDisplay.textContent = '0';
+                typedNumbers.textContent += `${firstNumber} / `;
+            }
+            else if (firstNumber !== null)
+            {
+                secondNumber = displayValue;
+                typedNumbers.textContent += `${secondNumber} / `;
+                currentDisplay.textContent = operate(firstNumber, secondNumber, currentOperator);
+                firstNumber = operate(firstNumber, secondNumber, currentOperator);
+                displayValue = firstNumber;
+                calculated = true;
+            }
+            break;
+
+        case '=':
+            if (firstNumber === null)
+            {
+                firstNumber = displayValue;
+                currentDisplay.textContent = '0';
+                typedNumbers.textContent += `${firstNumber} = `;
+            }
+            else if (firstNumber !== null)
+            {
+                secondNumber = displayValue;
+                typedNumbers.textContent += `${secondNumber} = `;
+                currentDisplay.textContent = operate(firstNumber, secondNumber, saveOperator);
+                firstNumber = operate(firstNumber, secondNumber, saveOperator);
+                displayValue = firstNumber;
+                calculated = true;
             }
             break;
     }
@@ -94,3 +167,4 @@ function calculate(e)
 number.forEach(element => element.addEventListener('click', displayNumber));
 operator.forEach(element => element.addEventListener('click', calculate));
 console.log(operate(1, 2, '+'));
+
