@@ -188,6 +188,8 @@ function characterClear()
     if (currentDisplay.textContent.length > 1)
     {
         currentDisplay.textContent = currentDisplay.textContent.slice(0, -1);
+        displayValue = currentDisplay.textContent;
+        return displayValue;
     }
     else currentDisplay.textContent = '0';
     
