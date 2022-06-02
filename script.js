@@ -2,7 +2,10 @@ const number = document.querySelectorAll('.btn-number');
 const currentDisplay = document.querySelector('.current-number-input');
 const operator = document.querySelectorAll('.btn-oper');
 const typedNumbers = document.querySelector('.saved-number');
-let displayValue = {};
+const clearEf = document.querySelector('.btn-clear-eff')
+const clearDisplay = document.querySelector('.btn-clear-displey');
+const backspace = document.querySelector('.btn-backspace');
+let displayValue = 0;
 let firstNumber = null;
 let secondNumber = null;
 console.log(displayValue);
@@ -65,6 +68,7 @@ function displayNumber(e)
 
 function calculate(e)
 {
+
     currentOperator = e.target.textContent;
     switch(currentOperator) 
     {
@@ -145,26 +149,48 @@ function calculate(e)
             break;
 
         case '=':
-            if (firstNumber === null)
-            {
-                firstNumber = displayValue;
-                currentDisplay.textContent = '0';
-                typedNumbers.textContent += `${firstNumber} = `;
-            }
-            else if (firstNumber !== null)
+            if (firstNumber !== null)
             {
                 secondNumber = displayValue;
                 typedNumbers.textContent += `${secondNumber} = `;
                 currentDisplay.textContent = operate(firstNumber, secondNumber, saveOperator);
-                firstNumber = operate(firstNumber, secondNumber, saveOperator);
-                displayValue = firstNumber;
+                displayValue = currentDisplay.textContent;
+                firstNumber = null;
+                secondNumber = null;
                 calculated = true;
             }
             break;
     }
 }
 
+function clear()
+{
+    firstNumber = null
+    secondNumber = null
+    displayValue = '0';
+    currentDisplay.textContent = '0';
+    typedNumbers.textContent = '';
+} 
+
+function clearDisp()
+{
+    currentDisplay.textContent = '0'
+    displayValue = '0';
+}
+
+function characterClear()
+{
+    if (currentDisplay.textContent.length > 1)
+    {
+        currentDisplay.textContent = currentDisplay.textContent.slice(0, -1);
+    }
+    else currentDisplay.textContent = '0';
+    
+}
+
 number.forEach(element => element.addEventListener('click', displayNumber));
 operator.forEach(element => element.addEventListener('click', calculate));
-console.log(operate(1, 2, '+'));
+clearEf.addEventListener('click', clear);
+clearDisplay.addEventListener('click', clearDisp)
+backspace.addEventListener('click', characterClear)
 
