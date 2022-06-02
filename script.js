@@ -13,23 +13,27 @@ let calculated = false;
 
 function add(number1, number2)
 {
-    return +number1 + +number2;
+    return Math.round((+number1 + +number2) * 100) / 100;
 }
 
 function subtract(number1, number2)
 {
-    return +number1 - +number2;
+    return Math.round((+number1 - +number2) * 100) / 100;
 }
 
 function multiply(number1, number2)
 {
-    return +number1 * +number2;
+    return Math.round((+number1 * +number2) * 100) / 100;
 }
 
 function divide(number1, number2)
 {
-    if (number2 === "0") { return "ERROR" }
-    else { return +number1 / +number2; }
+    if (number2 === "0") 
+    {
+        firstNumber = null;
+        return "ERROR" 
+    }
+    else { return Math.round((+number1 / +number2) * 100) / 100; }
 }
 
 function operate(number1, number2, operator)
@@ -49,6 +53,7 @@ function operate(number1, number2, operator)
 
 function displayNumber(e)
 {
+    operator.forEach(element => element.addEventListener('click', calculate));
     if (calculated)
     {
         currentDisplay.textContent = '';
