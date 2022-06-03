@@ -5,6 +5,8 @@ const typedNumbers = document.querySelector('.saved-number');
 const clearEf = document.querySelector('.btn-clear-eff')
 const clearDisplay = document.querySelector('.btn-clear-displey');
 const backspace = document.querySelector('.btn-backspace');
+const dot = document.querySelector('.btn-dot');
+
 let displayValue = 0;
 let firstNumber = null;
 let secondNumber = null;
@@ -71,6 +73,40 @@ function displayNumber(e)
     }
 }
 
+function calculation(op)
+{
+        if (firstNumber === null)
+            {
+                previousOperator = op;
+                firstNumber = displayValue;
+                currentDisplay.textContent = '0';
+                typedNumbers.textContent += `${firstNumber} ${op} `;
+            }
+        else if (firstNumber !== null)
+            {
+                if (previousOperator === currentOperator)
+                {                
+                    secondNumber = displayValue;
+                    typedNumbers.textContent += `${secondNumber} ${op} `;
+                    currentDisplay.textContent = operate(firstNumber, secondNumber, currentOperator);
+                    firstNumber = operate(firstNumber, secondNumber, currentOperator);
+                    displayValue = firstNumber;
+                    calculated = true;
+                }
+                else 
+                {
+                    secondNumber = displayValue;
+                    typedNumbers.textContent += `${secondNumber} ${op} `;
+                    currentDisplay.textContent = operate(firstNumber, secondNumber, previousOperator);
+                    firstNumber = operate(firstNumber, secondNumber, previousOperator);
+                    displayValue = firstNumber;
+                    previousOperator = currentOperator;
+                    calculated = true;
+                }
+            }
+}
+
+
 function calculate(e)
 {
 
@@ -78,135 +114,23 @@ function calculate(e)
     switch(currentOperator) 
     {
         case '+':
-            saveOperator = e.target.textContent;
-            if (firstNumber === null)
-            {
-                previousOperator = '+';
-                firstNumber = displayValue;
-                currentDisplay.textContent = '0';
-                typedNumbers.textContent += `${firstNumber} + `;
-            }
-            else if (firstNumber !== null)
-            {
-                if (previousOperator === currentOperator)
-                {                
-                    secondNumber = displayValue;
-                    typedNumbers.textContent += `${secondNumber} + `;
-                    currentDisplay.textContent = operate(firstNumber, secondNumber, currentOperator);
-                    firstNumber = operate(firstNumber, secondNumber, currentOperator);
-                    displayValue = firstNumber;
-                    calculated = true;
-                }
-                else 
-                {
-                    secondNumber = displayValue;
-                    typedNumbers.textContent += `${secondNumber} + `;
-                    currentDisplay.textContent = operate(firstNumber, secondNumber, previousOperator);
-                    firstNumber = operate(firstNumber, secondNumber, previousOperator);
-                    displayValue = firstNumber;
-                    previousOperator = currentOperator;
-                    calculated = true;
-                }
-            }
+            saveOperator = e.target.textContent
+            calculation('+');
             break;
 
         case '-':
             saveOperator = e.target.textContent
-            if (firstNumber === null)
-            {
-                previousOperator = '-';
-                firstNumber = displayValue;
-                currentDisplay.textContent = '0';
-                typedNumbers.textContent += `${firstNumber} - `;
-            }
-            else if (firstNumber !== null)
-            {
-                if (previousOperator === currentOperator)
-                {                
-                    secondNumber = displayValue;
-                    typedNumbers.textContent += `${secondNumber} - `;
-                    currentDisplay.textContent = operate(firstNumber, secondNumber, currentOperator);
-                    firstNumber = operate(firstNumber, secondNumber, currentOperator);
-                    displayValue = firstNumber;
-                    calculated = true;
-                }
-                else 
-                {
-                    secondNumber = displayValue;
-                    typedNumbers.textContent += `${secondNumber} - `;
-                    currentDisplay.textContent = operate(firstNumber, secondNumber, previousOperator);
-                    firstNumber = operate(firstNumber, secondNumber, previousOperator);
-                    displayValue = firstNumber;
-                    previousOperator = currentOperator;
-                    calculated = true;
-                }
-            }
+            calculation('-');
             break;
 
         case '*':
-            saveOperator = e.target.textContent
-            if (firstNumber === null)
-            {
-                firstNumber = displayValue;
-                previousOperator = '*';
-                currentDisplay.textContent = '0';
-                typedNumbers.textContent += `${firstNumber} * `;
-            }
-            else if (firstNumber !== null)
-            {
-                if (previousOperator === currentOperator)
-                {                
-                    secondNumber = displayValue;
-                    typedNumbers.textContent += `${secondNumber} * `;
-                    currentDisplay.textContent = operate(firstNumber, secondNumber, currentOperator);
-                    firstNumber = operate(firstNumber, secondNumber, currentOperator);
-                    displayValue = firstNumber;
-                    calculated = true;
-                }
-                else 
-                {
-                    secondNumber = displayValue;
-                    typedNumbers.textContent += `${secondNumber} * `;
-                    currentDisplay.textContent = operate(firstNumber, secondNumber, previousOperator);
-                    firstNumber = operate(firstNumber, secondNumber, previousOperator);
-                    displayValue = firstNumber;
-                    previousOperator = currentOperator;
-                    calculated = true;
-                }
-            }
+            saveOperator = e.target.textContent;
+            calculation('*');
             break;
 
         case '/':
-            saveOperator = e.target.textContent
-            if (firstNumber === null)
-            {
-                previousOperator = '/';
-                firstNumber = displayValue;
-                currentDisplay.textContent = '0';
-                typedNumbers.textContent += `${firstNumber} / `;
-            }
-            else if (firstNumber !== null)
-            {
-                if (previousOperator === currentOperator)
-                {                
-                    secondNumber = displayValue;
-                    typedNumbers.textContent += `${secondNumber} / `;
-                    currentDisplay.textContent = operate(firstNumber, secondNumber, currentOperator);
-                    firstNumber = operate(firstNumber, secondNumber, currentOperator);
-                    displayValue = firstNumber;
-                    calculated = true;
-                }
-                else 
-                {
-                    secondNumber = displayValue;
-                    typedNumbers.textContent += `${secondNumber} / `;
-                    currentDisplay.textContent = operate(firstNumber, secondNumber, previousOperator);
-                    firstNumber = operate(firstNumber, secondNumber, previousOperator);
-                    displayValue = firstNumber;
-                    previousOperator = currentOperator;
-                    calculated = true;
-                }
-            }
+            saveOperator = e.target.textContent;
+            calculation('/');
             break;
 
         case '=':
@@ -247,8 +171,16 @@ function characterClear()
         displayValue = currentDisplay.textContent;
         return displayValue;
     }
-    else currentDisplay.textContent = '0';
-    
+    else currentDisplay.textContent = '0'; 
+}
+
+function decimals()
+{
+    calculated = false;
+    if (!currentDisplay.textContent.includes('.'))
+    {
+        currentDisplay.textContent = currentDisplay.textContent + '.';
+    }
 }
 
 number.forEach(element => element.addEventListener('click', displayNumber));
@@ -256,3 +188,5 @@ operator.forEach(element => element.addEventListener('click', calculate));
 clearEf.addEventListener('click', clear);
 clearDisplay.addEventListener('click', clearDisp);
 backspace.addEventListener('click', characterClear);
+dot.addEventListener('click', decimals);
+

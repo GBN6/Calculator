@@ -4,7 +4,7 @@ body {
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    background-color: #ffb042;
+    background-color: #FF9F45;
 }
 
 #calculator {
@@ -75,11 +75,15 @@ body {
 }
 
 .btn-oper{
-    background-color: #FF9500;
+    background-color: #F76E11;
+}
+
+.btn-func{
+    background-color: #FC4F4F;
 }
 
 .btn-oper:focus {
-    background-color: #fdcd89;
+    background-color: #FFBC80;
 }
 
 .btn-number:active{
@@ -87,7 +91,7 @@ body {
 }
 
 .btn-func:active{
-    background-color: #505050;
+    background-color: #fa8e8e;
 }
 
 .item0 {
