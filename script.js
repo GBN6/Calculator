@@ -13,6 +13,7 @@ let secondNumber = null;
 console.log(displayValue);
 let calculated = false;
 
+//Basic Math functions
 function add(number1, number2)
 {
     return Math.round((+number1 + +number2) * 100) / 100;
@@ -30,14 +31,16 @@ function multiply(number1, number2)
 
 function divide(number1, number2)
 {
+    //check if divide by 0
     if (number2 === "0") 
     {
-        firstNumber = null;
+        calculated = true;
         return "ERROR" 
     }
     else { return Math.round((+number1 / +number2) * 100) / 100; }
 }
 
+//Call basic math function based on operator
 function operate(number1, number2, operator)
 {
     switch(operator) 
@@ -53,6 +56,7 @@ function operate(number1, number2, operator)
     }  
 }
 
+//Display numbers on screen, check for length 
 function displayNumber(e)
 {
     operator.forEach(element => element.addEventListener('click', calculate));
@@ -63,9 +67,6 @@ function displayNumber(e)
     }
     if (currentDisplay.textContent.length < 18)
     {
-        console.log(`firstNumber in display ${firstNumber}`)
-        console.log(`display value ${currentDisplay.textContent}`);
-
         currentNumber = e.target.textContent;
         currentDisplay.textContent === '0' ? currentDisplay.textContent = currentNumber : currentDisplay.textContent += currentNumber;
         displayValue = currentDisplay.textContent;
@@ -73,12 +74,14 @@ function displayNumber(e)
     }
 }
 
+//Function calculating inputed numbers
 function calculation(op)
 {
         if (firstNumber === null)
             {
                 previousOperator = op;
                 firstNumber = displayValue;
+                displayValue = '0';
                 currentDisplay.textContent = '0';
                 typedNumbers.textContent += `${firstNumber} ${op} `;
             }
@@ -109,6 +112,10 @@ function calculation(op)
 
 function calculate(e)
 {
+    if (currentDisplay.textContent === 'ERROR')
+    {
+        clear();
+    }
 
     currentOperator = e.target.textContent;
     switch(currentOperator) 
