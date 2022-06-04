@@ -122,7 +122,6 @@ function equals()
     }
 }
 
-
 function calculate(currentOperator)
 {
     if (currentDisplay.textContent === 'ERROR')
@@ -205,7 +204,6 @@ function keyboardSupport(e)
     if (e.key === 'Escape') clear();
     if (e.key === 'Delete') clearDisp();
     if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/' || e.key === '=' || e.key === 'Enter') calculate(e.key);
-    console.log(e.key);
 }
 
 number.forEach(element => element.addEventListener('click', () => displayNumber(element.textContent)));

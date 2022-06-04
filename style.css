@@ -20,10 +20,12 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    justify-items: start;
     background-color: #505050;
     color: white;
     border: 3px solid black;
-    margin-bottom: 5px;;
+    margin-bottom: 5px;
+    overflow: hidden;
 }
 .current-number-input, .saved-number {
     font-family: 'Courier New', Courier, monospace;
@@ -33,21 +35,14 @@ body {
 .saved-number{
     min-height: 18px;
     max-height: 19px;
-    max-width: 320px;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis;
-    direction: ltr;
 }
-
 
 .current-number-input {
     font-size: 30px;
     font-weight: bold;
-    max-width: 320px;
     overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
 }
 .current-number-input:hover{
     overflow: visible;
@@ -67,7 +62,7 @@ body {
 .btn {
     font-family: 'Courier New', Courier, monospace;
     font-weight: bolder;
-    border-radius: 0px;
+    border-radius: 5px;
     border: black 1px solid;
     background-color: #afafaf;
     font-size: 30px;
