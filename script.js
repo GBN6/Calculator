@@ -57,9 +57,8 @@ function operate(number1, number2, operator)
 }
 
 //Display numbers on screen, check for length 
-function displayNumber(e)
+function displayNumber(currentNumber)
 {
-    operator.forEach(element => element.addEventListener('click', calculate));
     if (calculated)
     {
         currentDisplay.textContent = '';
@@ -67,7 +66,7 @@ function displayNumber(e)
     }
     if (currentDisplay.textContent.length < 18)
     {
-        currentNumber = e.target.textContent;
+
         currentDisplay.textContent === '0' ? currentDisplay.textContent = currentNumber : currentDisplay.textContent += currentNumber;
         displayValue = currentDisplay.textContent;
         return displayValue;
@@ -87,12 +86,12 @@ function calculation(op)
             }
         else if (firstNumber !== null)
             {
-                if (previousOperator === currentOperator)
+                if (previousOperator === saveOperator)
                 {                
                     secondNumber = displayValue;
                     typedNumbers.textContent += `${secondNumber} ${op} `;
-                    currentDisplay.textContent = operate(firstNumber, secondNumber, currentOperator);
-                    firstNumber = operate(firstNumber, secondNumber, currentOperator);
+                    currentDisplay.textContent = operate(firstNumber, secondNumber, saveOperator);
+                    firstNumber = operate(firstNumber, secondNumber, saveOperator);
                     displayValue = firstNumber;
                     calculated = true;
                 }
@@ -103,54 +102,62 @@ function calculation(op)
                     currentDisplay.textContent = operate(firstNumber, secondNumber, previousOperator);
                     firstNumber = operate(firstNumber, secondNumber, previousOperator);
                     displayValue = firstNumber;
-                    previousOperator = currentOperator;
+                    previousOperator = saveOperator;
                     calculated = true;
                 }
             }
 }
 
+function equals()
+{
+    if (firstNumber !== null)
+    {
+        secondNumber = displayValue;
+        typedNumbers.textContent += `${secondNumber} = `;
+        currentDisplay.textContent = operate(firstNumber, secondNumber, saveOperator);
+        displayValue = currentDisplay.textContent;
+        firstNumber = null;
+        secondNumber = null;
+        calculated = true;
+    }
+}
 
-function calculate(e)
+
+function calculate(currentOperator)
 {
     if (currentDisplay.textContent === 'ERROR')
     {
         clear();
     }
 
-    currentOperator = e.target.textContent;
     switch(currentOperator) 
     {
         case '+':
-            saveOperator = e.target.textContent
+            saveOperator = currentOperator;
             calculation('+');
             break;
 
         case '-':
-            saveOperator = e.target.textContent
+            saveOperator = currentOperator;
             calculation('-');
             break;
 
         case '*':
-            saveOperator = e.target.textContent;
+            saveOperator = currentOperator;
             calculation('*');
             break;
 
         case '/':
-            saveOperator = e.target.textContent;
+            saveOperator = currentOperator;
             calculation('/');
             break;
 
         case '=':
-            if (firstNumber !== null)
-            {
-                secondNumber = displayValue;
-                typedNumbers.textContent += `${secondNumber} = `;
-                currentDisplay.textContent = operate(firstNumber, secondNumber, saveOperator);
-                displayValue = currentDisplay.textContent;
-                firstNumber = null;
-                secondNumber = null;
-                calculated = true;
-            }
+            equals();
+            break;
+
+        case 'Enter':
+            equals();
             break;
     }
 }
@@ -190,10 +197,22 @@ function decimals()
     }
 }
 
-number.forEach(element => element.addEventListener('click', displayNumber));
-operator.forEach(element => element.addEventListener('click', calculate));
+function keyboardSupport(e)
+{
+    if (e.key >= 0 && e.key <= 9) displayNumber(e.key)
+    if (e.key === '.') decimals()
+    if (e.key === 'Backspace') characterClear();
+    if (e.key === 'Escape') clear();
+    if (e.key === 'Delete') clearDisp();
+    if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/' || e.key === '=' || e.key === 'Enter') calculate(e.key);
+    console.log(e.key);
+}
+
+number.forEach(element => element.addEventListener('click', () => displayNumber(element.textContent)));
+operator.forEach(element => element.addEventListener('click', () => calculate(element.textContent)));
 clearEf.addEventListener('click', clear);
 clearDisplay.addEventListener('click', clearDisp);
 backspace.addEventListener('click', characterClear);
 dot.addEventListener('click', decimals);
+window.addEventListener('keydown', keyboardSupport)
 
